@@ -25,6 +25,8 @@ const handleUpdateUserPage = async(req, res) => {
     let id = req.params.id
     let user = await userService.getUserById(id)
     let userData = {}
+    userData = user
+    // console.log("check userData:", userData)
     if(user && user.length > 0){
         userData = user[0]
     }
