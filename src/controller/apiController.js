@@ -32,18 +32,28 @@ const handleRegister = async (req, res) => {
         })
     } catch (error) {
         return res.status(500).json({
-            EM: "A user is created successfully!", // error message
+            EM: "error from server", // error message
             EC: '0', //error code
             DT:'', // data
         })
     }
 }
 const handleLogin =async ( req, res) => {
-    console.log("check login form react:", req.body)
-    return res.status(200).json({
-        message: "OK",
-        data: 'login '
-    })
+    try {
+        let data = await loginRegisterService.handleUserLogin(req.body)
+        return res.status(200).json({
+            EM: data.EM, // error message
+            EC: data.EC, //error code
+            DT: data.DT, // data
+        })
+    } catch (error) {
+        return res.status(500).json({
+            EM: "error from server", // error message
+            EC: '0', //error code
+            DT: '', // data
+        })
+    }
+    
 }
 module.exports = {
     testApi, handleRegister, handleLogin
