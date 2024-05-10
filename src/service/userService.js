@@ -2,6 +2,7 @@ import mysql from 'mysql2/promise';
 import bluebird from 'bluebird'
 import bcrypt from "bcryptjs";
 import db from '../models/index'
+import { where } from 'sequelize/lib/sequelize';
 
 //get the promise implementation , we will use bluebird
 
@@ -30,14 +31,22 @@ const createNewUser = async (email, password, username) => {
 
 }
 const getUserList = async() => {
-    // const connection = await mysql.createConnection({ host: 'localhost', user: 'root', database: 'jwt', Promise: bluebird })
-
-    // try {
-    //     const [rows, fields] = await connection.execute('Select * from user');
-    //     return rows
-    // } catch (error) {
-    //     console.log('check error:', error)
-    // }
+    //test relationships
+    let newUser = await db.User.findOne({
+        where:{id:1},
+        attributes: ["id", "username", "email"],
+        include: {model: db.Group, attributes: ["name", "description"]},
+        raw:true,
+        nest: true
+    })
+    let r = await db.Role.findAll({
+        include: {model: db.Group, where : {id: 1}},
+        raw: true,
+        nest: true
+    })
+    console.log(">>check new users:", newUser)
+    console.log(">>check new r:", r)
+    
     let users = []
     users = await db.User.findAll()
     return users
