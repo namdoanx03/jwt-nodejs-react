@@ -49,7 +49,13 @@ const createFunc = async(req, res) => {
 }
 const updateFunc =async (req, res) => {
     try {
-       
+       //validate
+        let data = await userApiService.updateFunc(req.body)
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).json({
