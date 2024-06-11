@@ -5,8 +5,9 @@ const handleHelloworld = (req, res) => {
 }
 const handleUserPage = async (req, res) => {
     //model => get data from database
+    //cookies that have not been signed
     let userList = await userService.getUserList()
-    await userService.deleteUser(4)
+    // await userService.deleteUser(4)
     return res.render("user.ejs", {userList})
 }
 const handleCreateNewUser = (req, res) =>{

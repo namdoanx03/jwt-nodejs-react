@@ -1,12 +1,14 @@
+require("dotenv").config()
 import express from "express";
 import configViewEngine from "./config/viewEngine";
 import initWebRoutes from "./routes/wed";
 import initApiRoutes from "./routes/api";
-import bodyParser from "body-parser";
 import connection from "./config/connectDB";
 import configCors from "./config/cors";
-require("dotenv").config()
 import { verify } from "jsonwebtoken";
+
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
 const app = express()
 const PORT = process.env.PORT || 8080;
@@ -21,8 +23,11 @@ configViewEngine(app);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//config cookie parser
+app.use(cookieParser())
+
 //test connection DB
-connection()
+// connection()
 
 // init wed routes 
 initWebRoutes(app);
