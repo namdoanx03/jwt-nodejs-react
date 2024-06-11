@@ -28,6 +28,10 @@ connection()
 initWebRoutes(app);
 initApiRoutes(app)
 
+app.use((req, res) => {
+    return res.send('404 not found')
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on http = `+ PORT)
 })
